@@ -1,4 +1,4 @@
-package cn.dev33.satoken.context.model.servlet;
+package cn.dev33.satoken.servlet.model;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -20,7 +20,7 @@ public class SaResponseForServlet implements SaResponse {
 	
 	/**
 	 * 实例化
-	 * @param request request对象 
+	 * @param response response对象 
 	 */
 	public SaResponseForServlet(HttpServletResponse response) {
 		this.response = response;

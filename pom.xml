@@ -8,7 +8,7 @@
     <groupId>cn.dev33</groupId>
     <artifactId>sa-token-parent</artifactId>
 	<packaging>pom</packaging>
-	<version>1.15.2</version>
+	<version>1.16.0</version>
 	
 	<!-- 项目介绍 -->
 	<name>sa-token</name>
@@ -19,7 +19,9 @@
 	<!-- 所有模块 -->
 	<modules>
 		<module>sa-token-core</module>
+		<module>sa-token-servlet</module>
 		<module>sa-token-spring-boot-starter</module>
+		<module>sa-token-reactor-spring-boot-starter</module>
 		<module>sa-token-dao-redis</module>
 		<module>sa-token-dao-redis-jackson</module>
 		<module>sa-token-spring-aop</module>
@@ -38,7 +40,7 @@
 	
 	<!-- 一些属性 -->
 	<properties>
-		<sa-token-version>1.15.2</sa-token-version>
+		<sa-token-version>1.16.0</sa-token-version>
         <jdk.version>1.8</jdk.version>
 		<project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>utf-8</project.reporting.outputEncoding>

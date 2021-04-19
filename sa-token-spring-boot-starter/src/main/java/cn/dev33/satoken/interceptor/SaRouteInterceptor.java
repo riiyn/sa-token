@@ -6,6 +6,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import cn.dev33.satoken.router.SaRouteFunction;
+import cn.dev33.satoken.servlet.model.SaRequestForServlet;
+import cn.dev33.satoken.servlet.model.SaResponseForServlet;
 import cn.dev33.satoken.stp.StpUtil;
 
 /**
@@ -15,13 +17,19 @@ import cn.dev33.satoken.stp.StpUtil;
 public class SaRouteInterceptor implements HandlerInterceptor {
 
 	/**
-	 * 自定义模式下的执行函数
+	 * 每次进入拦截器的[执行函数]
 	 */
 	public SaRouteFunction function;
 
 	/**
-	 * 创建 (默认为自定义认证) 
-	 * @param function 自定义模式下的执行函数
+	 * 创建一个路由拦截器
+	 */
+	public SaRouteInterceptor() {
+	}
+
+	/**
+	 * 创建, 并指定[执行函数]
+	 * @param function [执行函数]
 	 */
 	public SaRouteInterceptor(SaRouteFunction function) {
 		this.function = function;
@@ -50,7 +58,8 @@ public class SaRouteInterceptor implements HandlerInterceptor {
 		if(function == null) {
 			StpUtil.checkLogin();
 		} else {
-			function.run(request, response, handler);
+			// 否则执行函数 
+			function.run(new SaRequestForServlet(request), new SaResponseForServlet(response), handler);
 		}
 		
 		// 通过验证 

@@ -1,7 +1,9 @@
 package cn.dev33.satoken.util;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -19,8 +21,12 @@ public class SaTokenInsideUtil {
 	 */
 	public static void printSaToken() {
 		String str = "____ ____    ___ ____ _  _ ____ _  _ \r\n" + "[__  |__| __  |  |  | |_/  |___ |\\ | \r\n"
-				+ "___] |  |     |  |__| | \\_ |___ | \\| \r\n" + "sa-token：" + SaTokenConsts.VERSION_NO
-				+ "         \r\n" + "GitHub：" + SaTokenConsts.GITHUB_URL; // + "\r\n";
+				+ "___] |  |     |  |__| | \\_ |___ | \\| " 
+//				+ "sa-token：" 
+				+ "\r\n" + "DevDoc：" + SaTokenConsts.DEV_DOC_URL // + "\r\n";
+				+ " (" + SaTokenConsts.VERSION_NO + ")" 
+				+ "\r\n" + "GitHub：" + SaTokenConsts.GITHUB_URL // + "\r\n";
+				;
 		System.out.println(str);
 	}
 
@@ -59,6 +65,15 @@ public class SaTokenInsideUtil {
 		return System.currentTimeMillis() + "" + new Random().nextInt(Integer.MAX_VALUE);
 	}
 
+	/**
+	 * 将日期格式化
+	 * @param date 日期
+	 * @return 格式化后的时间 
+	 */
+	public static String formatDate(Date date){
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+	}
+	
 	/**
 	 * 从集合里查询数据
 	 * 

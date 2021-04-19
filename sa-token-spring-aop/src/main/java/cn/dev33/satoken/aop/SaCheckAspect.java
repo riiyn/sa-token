@@ -5,10 +5,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import cn.dev33.satoken.stp.StpLogic;
 import cn.dev33.satoken.stp.StpUtil;
+import cn.dev33.satoken.util.SaTokenConsts;
 
 /**
  * sa-token 基于 Spring Aop 的注解鉴权
@@ -17,8 +19,9 @@ import cn.dev33.satoken.stp.StpUtil;
  */
 @Aspect
 @Component
+@Order(SaTokenConsts.ASSEMBLY_ORDER)
 public class SaCheckAspect {
-
+	
 	/**
 	 * 构建
 	 */

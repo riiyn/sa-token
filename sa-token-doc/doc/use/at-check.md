@@ -21,7 +21,7 @@ sa-token内置两种模式完成注解鉴权，分别是`AOP模式`和`拦截器
 <dependency>
 	<groupId>cn.dev33</groupId>
 	<artifactId>sa-token-spring-aop</artifactId>
-	<version>1.15.0</version>
+	<version>1.17.0</version>
 </dependency>
 ```
 
@@ -84,11 +84,11 @@ mode有两种取值：
 ## 2、使用拦截器模式
 使用AOP方式需要引入新的pom依赖，与此相比，拦截器模式显的更加轻量级  <br>
 你只需要将sa-token的注解校验拦截器注册到你的项目中即可打开注解鉴权功能 <br>
-以`SpringBoot2.0`为例, 新建配置类`MySaTokenConfig.java` 
+以`SpringBoot2.0`为例, 新建配置类`SaTokenConfigure.java` 
 
 ``` java
 @Configuration
-public class MySaTokenConfig implements WebMvcConfigurer {
+public class SaTokenConfigure implements WebMvcConfigurer {
 	// 注册sa-token的注解拦截器，打开注解式鉴权功能 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {

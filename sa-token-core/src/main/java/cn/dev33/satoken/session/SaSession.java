@@ -34,6 +34,7 @@ public class SaSession implements Serializable {
 	 * 构建一个Session对象
 	 */
 	public SaSession() {
+		this(null);
 	}
 
 	/**
@@ -43,6 +44,8 @@ public class SaSession implements Serializable {
 	public SaSession(String id) {
 		this.id = id;
 		this.createTime = System.currentTimeMillis();
+ 		// $$ 通知监听器 
+ 		SaTokenManager.getSaTokenListener().doCreateSession(id);
 	}
 
 	/**
@@ -240,15 +243,17 @@ public class SaSession implements Serializable {
 	// ----------------------- 一些操作
 
 	/**
-	 * 将这个Session从持久库更新一下
+	 * 更新Session（从持久库更新刷新一下）
 	 */
 	public void update() {
 		SaTokenManager.getSaTokenDao().updateSession(this);
 	}
 
-	/** 注销会话 (注销后，此session会话将不再存储服务器上) */
+	/** 注销Session (从持久库删除) */
 	public void logout() {
 		SaTokenManager.getSaTokenDao().deleteSession(this.id);
+ 		// $$ 通知监听器 
+ 		SaTokenManager.getSaTokenListener().doLogoutSession(id);
 	}
 
 	/** 当Session上的tokenSign数量为零时，注销会话 */
@@ -298,28 +303,7 @@ public class SaSession implements Serializable {
 	
 	// ----------------------- 存取值 (类型转换) 
 
-	/**
-	 * 写值
-	 * @param key   名称
-	 * @param value 值
-	 */
-	public void set(String key, Object value) {
-		dataMap.put(key, value);
-		update();
-	}
-
-	/**
-	 * 写值(只有在此key原本无值的时候才会写入)
-	 * @param key   名称
-	 * @param value 值
-	 */
-	public void setDefaultValue(String key, Object value) {
-		if(has(key) == false) {
-			dataMap.put(key, value);
-			update();
-		}
-	}
-
+	// ---- 取值 
 	/**
 	 * 取值
 	 * @param key key 
@@ -418,6 +402,33 @@ public class SaSession implements Serializable {
 		return getValueByClass(value, cs);
 	}
 
+	// ---- 其他
+	/**
+	 * 写值
+	 * @param key   名称
+	 * @param value 值
+	 * @return 对象自身
+	 */
+	public SaSession set(String key, Object value) {
+		dataMap.put(key, value);
+		update();
+		return this;
+	}
+
+	/**
+	 * 写值(只有在此key原本无值的时候才会写入)
+	 * @param key   名称
+	 * @param value 值
+	 * @return 对象自身
+	 */
+	public SaSession setDefaultValue(String key, Object value) {
+		if(has(key) == false) {
+			dataMap.put(key, value);
+			update();
+		}
+		return this;
+	}
+
 	/**
 	 * 是否含有某个key
 	 * @param key has
@@ -425,6 +436,17 @@ public class SaSession implements Serializable {
 	 */
 	public boolean has(String key) {
 		return !valueIsNull(get(key));
+	}
+
+	/**
+	 * 删值
+	 * @param key 要删除的key
+	 * @return 对象自身
+	 */
+	public SaSession delete(String key) {
+		dataMap.remove(key);
+		update();
+		return this;
 	}
 	
 	

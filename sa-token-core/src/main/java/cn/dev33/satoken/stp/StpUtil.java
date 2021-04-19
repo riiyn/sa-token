@@ -132,7 +132,42 @@ public class StpUtil {
 	public static void logoutByLoginId(Object loginId, String device) {
 		stpLogic.logoutByLoginId(loginId, device);
 	}
+
+	/**
+	 * 封禁指定账号
+	 * <p> 此方法不会直接将此账号id踢下线，而是在对方再次登录时抛出`DisableLoginException`异常 
+	 * @param loginId 指定账号id 
+	 * @param disableTime 封禁时间, 单位: 秒 （-1=永久封禁）
+	 */
+	public static void disable(Object loginId, long disableTime) {
+		stpLogic.disable(loginId, disableTime);
+	}
 	
+	/**
+	 * 指定账号是否已被封禁 (true=已被封禁, false=未被封禁) 
+	 * @param loginId 账号id
+	 * @return see note
+	 */
+	public static boolean isDisable(Object loginId) {
+		return stpLogic.isDisable(loginId);
+	}
+	
+	/**
+	 * 获取指定账号剩余封禁时间，单位：秒（-1=永久封禁，-2=未被封禁）
+	 * @param loginId 账号id
+	 * @return see note 
+	 */
+	public static long getDisableTime(Object loginId) {
+		return stpLogic.getDisableTime(loginId);
+	}
+
+	/**
+	 * 解封指定账号
+	 * @param loginId 账号id 
+	 */
+	public static void untieDisable(Object loginId) {
+		stpLogic.untieDisable(loginId);
+	}
 	
 	// 查询相关
 
